@@ -1,0 +1,13 @@
+      addi i, $0, 50 
+LOOP: lw temp, 0(MemArray)
+      add result, result, temp 
+      lw temp, 4(MemArray)
+      add result, result, temp
+      addi MemArray, MemArray, 8 
+      subi i, i, 1 
+      bne i, $0, LOOP
+
+for(i = 50;i>0;i--){
+  result += MemArray[0+(100-2*i)];
+  result += MemArray[1+(100-2*i)];
+}

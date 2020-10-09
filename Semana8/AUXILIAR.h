@@ -1,0 +1,1 @@
+int* random_vector(int n, int max, int seed);

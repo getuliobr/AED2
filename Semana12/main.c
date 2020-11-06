@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "Ordenar.h"
 #include "ABB.h"
 #include "ARN.h"
@@ -25,6 +26,15 @@ void printVetor(int *vetor, int tamanho) {
 		if(i != tamanho - 1) printf(", ");
 	}
   printf("]\n");
+}
+
+float dp(clock_t *clocks, float clockMedio, int n) {
+  float dp = 0;
+  for(int i = 0; i < n; i++) {
+    dp += pow(clocks[i] - clockMedio, 2);
+  }
+  dp /= n;
+  return sqrt(dp);
 }
 
 int main(int argc, const char* argv[]) {
@@ -54,36 +64,43 @@ int main(int argc, const char* argv[]) {
 
   printf("Vetor Aleatorio:\n");
 
-  clock_t mediaTempo = 0;
+  clock_t mediaTempo[10];
+  clock_t mediaFinalTempo = 0;
   int mediaAltura = 0;
   printf("ABB:\n");
   for(int i = 0; i < 10; i++) {
     v = random_vector(n, n * 10, 42);
     t = clock();
     mediaAltura += ABB_Sort(v, n);
-    mediaTempo += clock() - t;
+    mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;
+    mediaFinalTempo += mediaTempo[i];
   }
-  printf("Altura: %.2f\nTempo: %.2fs\n", (float)mediaAltura/10, (float)mediaTempo/CLOCKS_PER_SEC);
-
-  mediaTempo = 0;
+  mediaFinalTempo = mediaFinalTempo;
+  printf("Altura: %.2f\nTempo: %.2fs\nDP: %f\n", (float)mediaAltura/10, (float)mediaFinalTempo, dp(mediaTempo, mediaFinalTempo, 10));
+  
+  mediaFinalTempo = 0;
   mediaAltura = 0;
   printf("AVL:\n");
   for(int i = 0; i < 10; i++) {
     v = random_vector(n, n * 10, 42);
     t = clock();
     mediaAltura += AVL_Sort(v, n);
-    mediaTempo += clock() - t;
+    mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;
+    mediaFinalTempo += mediaTempo[i];
   }
-  printf("Altura: %.2f\nTempo: %.2fs\n", (float)mediaAltura/10, (float)mediaTempo/CLOCKS_PER_SEC);
+  mediaFinalTempo = mediaFinalTempo;
+  printf("Altura: %.2f\nTempo: %.2fs\nDP: %f\n", (float)mediaAltura/10, (float)mediaFinalTempo, dp(mediaTempo, mediaFinalTempo, 10));
 
-  mediaTempo = 0;
+  mediaFinalTempo = 0;
   mediaAltura = 0;
   printf("ARN:\n");
   for(int i = 0; i < 10; i++) {
     v = random_vector(n, n * 10, 42);
     t = clock();
     mediaAltura += ARN_Sort(v, n);
-    mediaTempo += clock() - t;
+    mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;
+    mediaFinalTempo += mediaTempo[i];
   }
-  printf("Altura: %.2f\nTempo: %.2fs\n", (float)mediaAltura/10, (float)mediaTempo/CLOCKS_PER_SEC);
+  mediaFinalTempo = mediaFinalTempo;
+  printf("Altura: %.2f\nTempo: %.2fs\nDP: %f\n", (float)mediaAltura/10, (float)mediaFinalTempo, dp(mediaTempo, mediaFinalTempo, 10));
 }

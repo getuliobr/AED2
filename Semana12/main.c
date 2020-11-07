@@ -49,6 +49,7 @@ int main(int argc, const char* argv[]) {
   printf("Altura: %d\nTempo: %.2fs\n", altura, (((float)t)/CLOCKS_PER_SEC));
 
   printf("AVL:\n");
+  free(v);
   v = decrescente(n);
   t = clock();
   altura = AVL_Sort(v, n);
@@ -56,6 +57,7 @@ int main(int argc, const char* argv[]) {
   printf("Altura: %d\nTempo: %.2fs\n", altura, (((float)t)/CLOCKS_PER_SEC));
 
   printf("ARN:\n");
+  free(v);
   v = decrescente(n);
   t = clock();
   altura = ARN_Sort(v, n);
@@ -66,10 +68,11 @@ int main(int argc, const char* argv[]) {
 
   clock_t mediaTempo[10];
   clock_t mediaFinalTempo = 0;
-  int mediaAltura = 0;
+  int mediaAltura = 0;  
   printf("ABB:\n");
+  free(v);
   for(int i = 0; i < 10; i++) {
-    v = random_vector(n, n * 10, 42);
+    v = random_vector(n, n * 10, 42 + i);
     t = clock();
     mediaAltura += ABB_Sort(v, n);
     mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;
@@ -81,8 +84,9 @@ int main(int argc, const char* argv[]) {
   mediaFinalTempo = 0;
   mediaAltura = 0;
   printf("AVL:\n");
+  free(v);
   for(int i = 0; i < 10; i++) {
-    v = random_vector(n, n * 10, 42);
+    v = random_vector(n, n * 10, 42 + i);
     t = clock();
     mediaAltura += AVL_Sort(v, n);
     mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;
@@ -94,8 +98,9 @@ int main(int argc, const char* argv[]) {
   mediaFinalTempo = 0;
   mediaAltura = 0;
   printf("ARN:\n");
+  free(v);
   for(int i = 0; i < 10; i++) {
-    v = random_vector(n, n * 10, 42);
+    v = random_vector(n, n * 10, 42 + i);
     t = clock();
     mediaAltura += ARN_Sort(v, n);
     mediaTempo[i] = ((float)clock() - t)/CLOCKS_PER_SEC;

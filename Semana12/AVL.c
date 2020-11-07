@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "avl.h"
+#include "AVL.h"
 
 #define AAVL_DEBUG 0
 
